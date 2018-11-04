@@ -9,14 +9,26 @@ import React, {Component} from 'react'; // {Component} that way when we extends 
 
 // class based component can keep track of some sort of records, state
 class SearchBar extends Component {
-    render() {
-        // the event handler passed back into onChange, onChange is prop
-        return <input onChange={this.onInputChange} />;
+    // when an instant is created, constructor automatically called
+    // constructor function is researse for doing some setup, init var, init state, etc
+    constructor(props) {
+        // super mean Component here, super call the parent method
+        super(props);
+
+        // when initialize state, we set an object, term is the property
+        // we only set the state = {} in the constructor, every where else we use setState to update state, never use state = {}
+        this.state = {term:''};
     }
 
-    // Event Handler , pass in event object, we can refactor to put the eventHandler function directly into the onChange
-    onInputChange(event) {
-        console.log(event.target.value);
+    render() {
+        // the event handler(a function) passed back into onChange, onChange is prop
+        return (
+            <div>
+                <input
+                value = {this.state.term} 
+                onChange={event => {this.setState({term: event.target.value})}} />;
+            </div>
+        );
     }
 }
 
