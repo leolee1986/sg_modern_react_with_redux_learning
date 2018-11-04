@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import YTSearch from 'youtube-api-search';
 
@@ -6,18 +6,36 @@ import SearchBar from './components/search_bar';
 
 const API_KEY = 'AIzaSyBG1-20N_dNqUKj6W2YqcesUsROiPYthhE'; // need to put in key
 
-// sample search
-YTSearch({key: API_KEY, term: 'pet grooming'}, function(data) {
-    console.log(data);
-});
+// this is functional component, since the app require to manage state, going to refactor to a class base component
+// const App = () => {
+//     return (
+//         <div>
+//             <SearchBar />
+//         </div>
+//     );
+// }
 
-// create a new component. this component should produce some HTML
-const App = () => {
-    return (
-        <div>
-            <SearchBar />
-        </div>
-    );
+// class based component
+class App extends Component {
+    constructor (props) {
+        super(props);
+        this.state = {videos: []};
+
+        // defalut youtube search when the app is fire up
+        // pass a setup object and a callback function
+        YTSearch({key: API_KEY, term: 'pet grooming'}, videos => {
+            // this.setState({videos: videos});
+            this.setState({videos}); // this line is the same as the comment above, if videos: videos, can be shorten to vidoes
+        });
+
+    };
+    render() {
+        return (
+            <div>
+                <SearchBar />
+            </div>
+        );
+    }
 }
 
 // take the component and put it on the page
