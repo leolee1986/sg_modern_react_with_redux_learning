@@ -4,7 +4,7 @@ import YTSearch from 'youtube-api-search';
 
 import SearchBar from './components/search_bar';
 import VideoList from './components/video_list';
-
+import VideoDetail from './components/video_detail';
 const API_KEY = 'AIzaSyBG1-20N_dNqUKj6W2YqcesUsROiPYthhE'; // need to put in key
 
 // this is functional component, since the app require to manage state, going to refactor to a class base component
@@ -34,6 +34,7 @@ class App extends Component {
         return (
             <div>
                 <SearchBar />
+                <VideoDetail video = {this.state.videos[0]}/>
                 <VideoList videos = {this.state.videos} />
             </div>
         );
