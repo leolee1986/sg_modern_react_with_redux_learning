@@ -16,20 +16,22 @@ class App extends Component {
             selectedVideo: null
         };
 
-        // defalut youtube search when the app is fire up
-        // pass a setup object and a callback function
-        YTSearch({key: API_KEY, term: 'pet grooming'}, videos => {
+        this.videoSearch('pet grooming');
+    };
+
+    videoSearch(term) {
+        YTSearch({key: API_KEY, term: term}, videos => {
             this.setState({
                 videos: videos,
                 selectedVideo: videos[0]
             }); 
         });
+    }
 
-    };
     render() {
         return (
             <div>
-                <SearchBar />
+                <SearchBar onSearchTermChange={term => this.videoSearch(term)}/>
                 <VideoDetail video = {this.state.selectedVideo}/>
                 <VideoList
                  onVideoSelect={selectedVideo => this.setState({selectedVideo})}
