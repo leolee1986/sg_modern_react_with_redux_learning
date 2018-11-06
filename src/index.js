@@ -7,26 +7,22 @@ import VideoList from './components/video_list';
 import VideoDetail from './components/video_detail';
 const API_KEY = 'AIzaSyBG1-20N_dNqUKj6W2YqcesUsROiPYthhE'; // need to put in key
 
-// this is functional component, since the app require to manage state, going to refactor to a class base component
-// const App = () => {
-//     return (
-//         <div>
-//             <SearchBar />
-//         </div>
-//     );
-// }
-
 // class based component
 class App extends Component {
     constructor (props) {
         super(props);
-        this.state = {videos: []};
+        this.state = {
+            videos: [],
+            selectedVideo: null
+        };
 
         // defalut youtube search when the app is fire up
         // pass a setup object and a callback function
         YTSearch({key: API_KEY, term: 'pet grooming'}, videos => {
-            // this.setState({videos: videos});
-            this.setState({videos}); // this line is the same as the comment above, if videos: videos, can be shorten to vidoes
+            this.setState({
+                videos: videos,
+                selectedVideo: videos[0]
+            }); 
         });
 
     };
@@ -34,8 +30,10 @@ class App extends Component {
         return (
             <div>
                 <SearchBar />
-                <VideoDetail video = {this.state.videos[0]}/>
-                <VideoList videos = {this.state.videos} />
+                <VideoDetail video = {this.state.selectedVideo}/>
+                <VideoList
+                 onVideoSelect={selectedVideo => this.setState({selectedVideo})}
+                 videos = {this.state.videos} />
             </div>
         );
     }
